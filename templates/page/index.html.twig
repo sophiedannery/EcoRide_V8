@@ -18,8 +18,16 @@
 	</style>
 
 	<div class="example-wrapper">
-		<h1>Hello
-			{{ website_name }}! ✅</h1>
+
+		<h1>
+			{% if app.user %}
+				Hello
+				{{ app.user.email }}
+				!
+			{% else %}
+				Hello, Guest!
+			{% endif %}
+		</h1>
 
 
 	</div>
