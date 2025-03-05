@@ -26,7 +26,8 @@
 
 		<div class="col-md-3 text-end">
 			{% if app.user %}
-				<a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+				<a href="{{ path('app_mon_espace') }}" class="btn btn-outline-primary me-2">Mon Espace</a>
+				<a href="{{ path('app_logout') }}" class="btn btn-primary">Logout</a>
 			{% else %}
 				<a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Login</a>
 				<a href="{{ path('app_register') }}" class="btn btn-primary">Sign-up</a>

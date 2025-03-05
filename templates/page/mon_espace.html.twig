@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Espace
+{% endblock %}
+
+{% block body %}
+	<h1>Hello
+		{{ user.pseudo }}
+		!</h1>
+
+	<h3>Mes infos :</h3>
+	<p>
+		<strong>Email :</strong>
+		{{ user.email }}</p>
+	<p>
+		<strong>statut :</strong>
+		{{ user.type }}</p>
+
+	<h3>Mes voitures :</h3>
+	{% if voitures is empty %}
+		<p>Vous n'avez pas encore ajouté de voiture.</p>
+	{% else %}
+		<ul classs="list-group">
+			{% for voiture in voitures %}
+				<li class="list-group-item">
+					<strong>{{ voiture.marque }}
+						{{ voiture.modele }}
+						({{ voiture.plaque_immatriculation }})</strong>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	<a href="#" class="btn btn-primary mt-3">Ajouter une voiture</a>
+{% endblock %}
