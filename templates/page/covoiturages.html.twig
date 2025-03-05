@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Covoiturages
+{% endblock %}
+
+{% block body %}
+
+	<h1>Liste des covoiturages</h1>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Départ</th>
+				<th>Arrivée</th>
+				<th>Date</th>
+				<th>Chauffeur</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for covoiturage in covoiturages %}
+				<tr>
+					<td>{{ covoiturage.depart }}</td>
+					<td>{{ covoiturage.arrivee }}</td>
+					<td>{{ covoiturage.dateHeureDepart|date('d/m/Y H:i') }}</td>
+					{# <td>
+																					{% for chauffeur in covoiturage.chauffeurs %}
+																						{{ chauffeur.pseudo }}
+																						{% if not loop.last %},
+																						{% endif %}
+																					{% endfor %}
+																				</td> #}
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucun covoiturage disponible.</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

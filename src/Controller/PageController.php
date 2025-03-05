@@ -37,9 +37,21 @@ final class PageController extends AbstractController
 
         $voitures = $voitureRepository->findBy(['user' => $user]);
 
+
         return $this->render('page/mon_espace.html.twig', [
             'user' => $user,
             'voitures' => $voitures
+        ]);
+    }
+
+    #[Route('/covoiturages', name: 'app_covoiturages')]
+    public function covoiturages(CovoiturageRepository $covoiturageRepository): Response
+    {
+        $covoiturages = $covoiturageRepository->findAll();
+
+
+        return $this->render('page/covoiturages.html.twig', [
+            'covoiturages' => $covoiturages
         ]);
     }
 
