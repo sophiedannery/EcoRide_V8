@@ -25,11 +25,12 @@
 				<li class="list-group-item">
 					<strong>{{ voiture.marque }}
 						{{ voiture.modele }}
-						({{ voiture.plaque_immatriculation }})</strong>
+						({{ voiture.plaqueImmatriculation }})</strong>
 				</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
 
-	<a href="#" class="btn btn-primary mt-3">Ajouter une voiture</a>
+	<a href="{{ path('app_ajout_voiture') }}" class="btn btn-primary mt-3">Ajouter une voiture</a>
+
 {% endblock %}
