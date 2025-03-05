@@ -22,13 +22,13 @@
 					<td>{{ covoiturage.depart }}</td>
 					<td>{{ covoiturage.arrivee }}</td>
 					<td>{{ covoiturage.dateHeureDepart|date('d/m/Y H:i') }}</td>
-					{# <td>
-																					{% for chauffeur in covoiturage.chauffeurs %}
-																						{{ chauffeur.pseudo }}
-																						{% if not loop.last %},
-																						{% endif %}
-																					{% endfor %}
-																				</td> #}
+					<td>
+						{% for chauffeur in covoiturage.chauffeur %}
+							{{ chauffeur.pseudo }}
+							{% if not loop.last %},
+							{% endif %}
+						{% endfor %}
+					</td>
 				</tr>
 			{% else %}
 				<tr>
