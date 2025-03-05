@@ -19,15 +19,24 @@ class VoitureFormType extends AbstractType
         $builder
             ->add('plaque_immatriculation', TextType::class, [
                 'label' => 'Plaque d\'immatriculation',
+                'attr' => ['class' => 'form-control mb-3']
             ])
             ->add('date_premiere_immatriculation', DateType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de première immatriculation',
+                'attr' => ['class' => 'form-control mb-3']
             ])
-            ->add('marque', TextType::class)
-            ->add('modele', TextType::class)
-            ->add('couleur', TextType::class)
+            ->add('marque', TextType::class, [
+                'attr' => ['class' => 'form-control mb-3'],
+            ])
+            ->add('modele', TextType::class, [
+                'attr' => ['class' => 'form-control mb-3'],
+            ])
+            ->add('couleur', TextType::class, [
+                'attr' => ['class' => 'form-control mb-3'],
+            ])
             ->add('energie', ChoiceType::class, [
+                'attr' => ['class' => 'form-control mb-3'],
                 'choices' => [
                     'Essence' => 'essence',
                     'Diesel' => 'diesel',
@@ -38,9 +47,11 @@ class VoitureFormType extends AbstractType
             ])
             ->add('nb_place', IntegerType::class, [
                 'label' => 'Nombre de place disponible',
+                'attr' => ['class' => 'form-control mb-3']
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Ajouter la voiture',
+                'attr' => ['class' => 'btn btn-primary mb-3 w-100']
             ])
         ;
     }
