@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un trajet
+{% endblock %}
+
+{% block body %}
+	<div class="w-70">
+		<h1>Ajouter un trajet</h1>
+
+		{{ form_errors(covoiturageForm) }}
+
+		{{ form_start(covoiturageForm) }}
+
+		{{ form_widget(covoiturageForm) }}
+
+		{{ form_end(covoiturageForm) }}
+
+
+	</div>
+
+{% endblock %}

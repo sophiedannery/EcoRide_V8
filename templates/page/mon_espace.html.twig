@@ -20,7 +20,7 @@
 	{% if voitures is empty %}
 		<p>Vous n'avez pas encore ajouté de voiture.</p>
 	{% else %}
-		<ul classs="list-group">
+		<ul class="list-group">
 			{% for voiture in voitures %}
 				<li class="list-group-item">
 					<strong>{{ voiture.marque }}
@@ -32,5 +32,9 @@
 	{% endif %}
 
 	<a href="{{ path('app_ajout_voiture') }}" class="btn btn-primary mt-3">Ajouter une voiture</a>
+
+
+	<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
+
 
 {% endblock %}

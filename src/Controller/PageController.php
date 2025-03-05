@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Covoiturage;
 use App\Entity\Voiture;
+use App\Form\CovoiturageFormType;
 use App\Form\VoitureFormType;
+use App\Repository\CovoiturageRepository;
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,7 +40,6 @@ final class PageController extends AbstractController
         return $this->render('page/mon_espace.html.twig', [
             'user' => $user,
             'voitures' => $voitures
-
         ]);
     }
 
@@ -64,6 +66,34 @@ final class PageController extends AbstractController
 
         return $this->render('page/ajout_voiture.html.twig', [
             'voitureForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('ajout_trajet', name: 'app_ajout_trajet')]
+    public function ajoutTrajet(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $covoiturage = new Covoiturage();
+        $form = $this->createForm(CovoiturageFormType::class, $covoiturage);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $covoiturage->addChauffeur($user);
+
+            $entityManager->persist($covoiturage);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Trajet ajouté avec succès !');
+
+            return $this->redirectToRoute('app_mon_espace');
+        }
+
+        return $this->render('page/ajout_trajet.html.twig', [
+            'covoiturageForm' => $form->createView(),
         ]);
     }
 }
