@@ -44,30 +44,41 @@
 					<strong>{{ covoiturage.depart }}
 						-
 						{{ covoiturage.arrivee }}</strong>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
+					<div>
+						<strong>Passagers :</strong>
+						{% if covoiturage.passagers is empty %}
+							Aucun passager pour ce trajet
+						{% else %}
+							<ul>
+								{% for passager in covoiturage.passagers %}
+									<li>{{ passager.pseudo }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
 
-	<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
-
-
-	<h3 class="mt-5">Mes trajets en tant que passager :</h3>
-	{% if covoituragesPassager is empty %}
-		<p>Vous ne participez à aucun trajet pour le moment.</p>
-	{% else %}
-		<ul class="list-group">
-			{% for covoituragePassager in covoituragesPassager %}
-				<li class="list-group-item">
-					<strong>{{ covoituragePassager.depart }}
-						-
-						{{ covoituragePassager.arrivee }}</strong>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-
-	<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
+		<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
 
 
-{% endblock %}
+		<h3 class="mt-5">Mes trajets en tant que passager :</h3>
+		{% if covoituragesPassager is empty %}
+			<p>Vous ne participez à aucun trajet pour le moment.</p>
+		{% else %}
+			<ul class="list-group">
+				{% for covoituragePassager in covoituragesPassager %}
+					<li class="list-group-item">
+						<strong>{{ covoituragePassager.depart }}
+							-
+							{{ covoituragePassager.arrivee }}</strong>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
+
+
+	{% endblock %}
