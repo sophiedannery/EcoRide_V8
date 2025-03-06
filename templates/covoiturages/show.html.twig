@@ -4,5 +4,76 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ covoiturage.depart }}</h1>
+
+	<div class="px-4 py-5 my-5 text-center">
+		<img class="d-block mx-auto mb-4" src="{{ asset('assets/logo/EcoRide_Logo4.png')}}" alt="" width="72" height="57">
+		<h1 class="display-5 fw-bold text-body-emphasis">{{ covoiturage.depart }}
+			-
+			{{ covoiturage.arrivee }}</h1>
+		<div class="col-lg-6 mx-auto text-start">
+
+			<p class="card-text">
+				<i class="bi bi-person-circle"></i>
+				Chauffeur :
+				{{ covoiturage.chauffeur.pseudo }}</p>
+
+			<p class="card-text">
+				<i class="bi bi-star-fill"></i>
+				Note :
+			</p>
+
+			<p class="card-text">
+				<i class="bi bi-chat-heart-fill"></i>
+				Préférences :
+			</p>
+
+			<p class="card-text">
+				<i class="bi bi-car-front-fill"></i>
+				Voiture :
+				{{ covoiturage.voiture.marque }}
+				{{ covoiturage.voiture.modele }}</p>
+
+			<p class="card-text">
+				<i class="bi bi-calendar-check"></i>
+				Date :
+				{{ covoiturage.dateHeureDepart|date('d/m/Y H:i') }}</p>
+
+			<p class="card-text">
+				<i class="bi bi-piggy-bank-fill"></i>
+				Prix :
+				{{ covoiturage.prixPersonne }}
+				crédits</p>
+
+			<p class="card-text">
+				<i class="bi bi-suitcase-fill"></i>
+				Place disponibles :
+				{{ covoiturage.nbPlace }}
+			</p>
+
+			<p class="card-text">
+				<i class="bi bi-lightning-charge-fill"></i>
+				Energie du véhicule :
+				{{ covoiturage.voiture.energie }}
+			</p>
+
+			{% if covoiturage.isEcologique %}
+				<p class="card-text">
+					<i class="bi bi-ev-front-fill"></i>
+					Trajet écologique</p>
+			{% endif %}
+
+
+			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+				{% if covoiturage.nbPlace <= 0 %}
+					<button type="submit" class="btn btn-secondary mt-3" disabled>Plus de places disponibles</button>
+				{% else %}
+					<form method="post" action="{{ path('app_participer_trajet', {'id': covoiturage.id}) }}">
+						<button type="submit" class="btn btn-primary btn-lg px-4 gap-3y">Participer à ce trajet</button>
+					</form>
+				{% endif %}
+				<a href="{{ path('app_covoiturages') }}" class="btn btn-outline-secondary btn-lg px-4 ">Retour</a>
+			</div>
+
+		</div>
+	</div>
 {% endblock %}
