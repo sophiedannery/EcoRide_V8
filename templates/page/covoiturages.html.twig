@@ -47,16 +47,20 @@
 						crédits
 					</td>
 					<td>
-						<form method="post" action="{{ path('app_participer_trajet', {'id': covoiturage.id}) }}">
-							<button type="submit" class="btn btn-primary">Participer à ce trajet</button>
-						</form>
+						{% if covoiturage.nbPlace <= 0 %}
+							<button type="submit" class="btn btn-secondary" disabled>Plus de places disponibles</button>
+						{% else %}
+							<form method="post" action="{{ path('app_participer_trajet', {'id': covoiturage.id}) }}">
+								<button type="submit" class="btn btn-primary">Participer à ce trajet</button>
+							</form>
+						{% endif %}
 					</td>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="4">Aucun covoiturage disponible.</td>
-				</tr>
-			{% endfor %}
+			</td>
 		</tbody>
-	</table>
-{% endblock %}
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="4">Aucun covoiturage disponible.</td>
+	</tr>
+{% endfor %}</tbody></table>{% endblock %}
