@@ -142,7 +142,14 @@ final class PageController extends AbstractController
             return $this->redirectToRoute('app_covoiturages');
         }
 
+        if ($covoiturage->getNbPlace() <= 0) {
+            $this->addFlash('error', 'Il n\'y as plus de places disponibles pour ce trajet.');
+            return $this->redirectToRoute('app_covoiturages');
+        }
+
         $covoiturage->addPassagers($user);
+
+        $covoiturage->setNbPlace($covoiturage->getNbPlace() - 1);
 
         $entityManager->persist($covoiturage);
         $entityManager->flush();
