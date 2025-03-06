@@ -11,6 +11,7 @@ use App\Repository\VoitureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -110,5 +111,36 @@ final class PageController extends AbstractController
         return $this->render('page/ajout_trajet.html.twig', [
             'covoiturageForm' => $form->createView(),
         ]);
+    }
+
+
+    #[Route('participer_trajet/{id}', name: 'app_participer_trajet')]
+    public function participerTrajet(int $id, CovoiturageRepository $covoiturageRepository, EntityManagerInterface $entityManager): RedirectResponse
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        $covoiturage = $covoiturageRepository->find($id);
+
+        if (!$covoiturage) {
+            $this->addFlash('error', 'Covoiturage non trouvé.');
+            return $this->redirectToRoute('app_covoiturages');
+        }
+
+        if ($covoiturage->getPassagers()->contains($user)) {
+            $this->addFlash('warning', 'Vous êtes déjà inscrit à ce trajet.');
+            return $this->redirectToRoute('app_covoiturages');
+        }
+
+        $covoiturage->addPassagers($user);
+
+        $entityManager->persist($covoiturage);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Vous avez rejoint ce trajet en tant que passager.');
+
+        return $this->redirectToRoute('app_covoiturages');
     }
 }
