@@ -52,4 +52,22 @@
 	<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
 
 
+	<h3 class="mt-5">Mes trajets en tant que passager :</h3>
+	{% if covoituragesPassager is empty %}
+		<p>Vous ne participez à aucun trajet pour le moment.</p>
+	{% else %}
+		<ul class="list-group">
+			{% for covoituragePassager in covoituragesPassager %}
+				<li class="list-group-item">
+					<strong>{{ covoituragePassager.depart }}
+						-
+						{{ covoituragePassager.arrivee }}</strong>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
+
+
 {% endblock %}

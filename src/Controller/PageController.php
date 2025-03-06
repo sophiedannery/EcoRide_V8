@@ -39,11 +39,19 @@ final class PageController extends AbstractController
         $voitures = $voitureRepository->findBy(['user' => $user]);
         $covoiturages = $covoiturageRepository->findBy(['chauffeur' => $user]);
 
+        $covoituragesPassager = $covoiturageRepository->createQueryBuilder('c')
+            ->join('c.passagers', 'p')
+            ->where('p = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
 
         return $this->render('page/mon_espace.html.twig', [
             'user' => $user,
             'voitures' => $voitures,
-            'covoiturages' => $covoiturages
+            'covoiturages' => $covoiturages,
+            'covoituragesPassager' => $covoituragesPassager
         ]);
     }
 
