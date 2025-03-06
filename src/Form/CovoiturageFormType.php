@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 class CovoiturageFormType extends AbstractType
 {
@@ -57,7 +58,11 @@ class CovoiturageFormType extends AbstractType
             ])
             ->add('nb_place', IntegerType::class, [
                 'label' => 'Places disponible',
-                'attr' => ['class' => 'form-control mb-3']
+                'attr' => [
+                    'class' => 'form-control mb-3',
+                    'min' => 1,
+                    'value' => 1,
+                ]
             ])
             ->add('prix_personne', IntegerType::class, [
                 'label' => 'Prix par personne (dont 2 crédits de frais)',
