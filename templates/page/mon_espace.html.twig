@@ -41,9 +41,11 @@
 		<ul class="list-group">
 			{% for covoiturage in covoiturages %}
 				<li class="list-group-item">
-					<strong>{{ covoiturage.depart }}
-						-
-						{{ covoiturage.arrivee }}</strong>
+					<strong>{{ covoiturage.depart }}</strong>
+					-
+					<strong>{{ covoiturage.arrivee }}</strong>
+					|
+					{{ covoiturage.dateHeureDepart|date('d/m/Y H:i') }}
 					<div>
 						<strong>Passagers :</strong>
 						{% if covoiturage.passagers is empty %}
@@ -70,9 +72,14 @@
 			<ul class="list-group">
 				{% for covoituragePassager in covoituragesPassager %}
 					<li class="list-group-item">
-						<strong>{{ covoituragePassager.depart }}
-							-
-							{{ covoituragePassager.arrivee }}</strong>
+						<strong>{{ covoituragePassager.depart }}</strong>
+						-
+						<strong>{{ covoituragePassager.arrivee }}</strong>
+						|
+						{{ covoituragePassager.dateHeureDepart|date('d/m/Y H:i') }}
+						|
+						{{ covoituragePassager.prixPersonne }}
+						crédits
 					</li>
 				{% endfor %}
 			</ul>
