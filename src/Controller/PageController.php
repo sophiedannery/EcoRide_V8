@@ -108,6 +108,13 @@ final class PageController extends AbstractController
             $chauffeur = $this->getUser();
             $covoiturage->setChauffeur($chauffeur);
 
+            $voiture = $covoiturage->getVoiture();
+            if ($voiture && strtolower($voiture->getEnergie()) === 'electrique') {
+                $covoiturage->setIsEcologique(true);
+            } else {
+                $covoiturage->setIsEcologique(false);
+            }
+
             $entityManager->persist($covoiturage);
             $entityManager->flush();
 

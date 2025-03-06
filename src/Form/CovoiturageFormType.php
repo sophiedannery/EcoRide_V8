@@ -68,11 +68,11 @@ class CovoiturageFormType extends AbstractType
                 'label' => 'Prix par personne (dont 2 crédits de frais)',
                 'attr' => ['class' => 'form-control mb-3']
             ])
-            ->add('is_ecologique', CheckboxType::class, [
-                'label' => 'Trajet écologique',
-                'required' => false,
-                'attr' => ['class' => 'form-control mb-3']
-            ])
+            // ->add('is_ecologique', CheckboxType::class, [
+            //     'label' => 'Trajet écologique',
+            //     'required' => false,
+            //     'attr' => ['class' => 'form-control mb-3']
+            // ])
             ->add('voiture', EntityType::class, [
                 'class' => Voiture::class,
                 'choices' => ($user instanceof \App\Entity\User) ? $user->getVoitures()->toArray() : [],

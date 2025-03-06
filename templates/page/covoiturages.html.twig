@@ -27,6 +27,7 @@
 				<th>Chauffeur</th>
 				<th>Nombre de place</th>
 				<th>Prix</th>
+				<th>Energie</th>
 				<th>Participer</th>
 			</tr>
 		</thead>
@@ -45,6 +46,11 @@
 					<td>
 						{{ covoiturage.prixPersonne }}
 						crédits
+					</td>
+					<td>
+						{% if covoiturage.isEcologique %}
+							<span class="badge bg-success">Trajet écologique</span>
+						{% endif %}
 					</td>
 					<td>
 						{% if covoiturage.nbPlace <= 0 %}
