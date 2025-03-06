@@ -66,6 +66,17 @@ final class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/covoiturages/{id}', name: 'app_covoiturages_show')]
+    public function show(Covoiturage $covoiturage): Response
+    {
+
+        return $this->render('covoiturages/show.html.twig', [
+            'covoiturage' => $covoiturage
+        ]);
+    }
+
+
+
     #[Route('ajout_voiture', name: 'app_ajout_voiture')]
     public function ajoutVoiture(Request $request, EntityManagerInterface $entityManager): Response
     {

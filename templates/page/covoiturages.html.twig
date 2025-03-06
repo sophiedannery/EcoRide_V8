@@ -58,7 +58,7 @@
 										Trajet écologique</p>
 								{% endif %}
 								<div class="mt-auto">
-									<a href="#" class="btn btn-primary ">Détails</a>
+									<a href="{{ path('app_covoiturages_show', {'id': covoiturage.id}) }}" class="btn btn-primary ">Détails</a>
 								</div>
 								{% if covoiturage.nbPlace <= 0 %}
 									<button type="submit" class="btn btn-secondary mt-3" disabled>Plus de places disponibles</button>
