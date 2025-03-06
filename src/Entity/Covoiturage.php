@@ -51,6 +51,9 @@ class Covoiturage
     #[ORM\JoinColumn(nullable: false)]
     private ?User $chauffeur = null;
 
+    #[ORM\Column]
+    private ?int $nb_place = null;
+
     public function __construct()
     {
         $this->passagers = new ArrayCollection();
@@ -189,6 +192,18 @@ class Covoiturage
     public function setChauffeur(?User $chauffeur): static
     {
         $this->chauffeur = $chauffeur;
+
+        return $this;
+    }
+
+    public function getNbPlace(): ?int
+    {
+        return $this->nb_place;
+    }
+
+    public function setNbPlace(int $nb_place): static
+    {
+        $this->nb_place = $nb_place;
 
         return $this;
     }

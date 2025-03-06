@@ -25,6 +25,8 @@
 				<th>Arrivée</th>
 				<th>Date</th>
 				<th>Chauffeur</th>
+				<th>Nombre de place</th>
+				<th>Prix</th>
 				<th>Participer</th>
 			</tr>
 		</thead>
@@ -36,6 +38,13 @@
 					<td>{{ covoiturage.dateHeureDepart|date('d/m/Y H:i') }}</td>
 					<td>
 						{{ covoiturage.chauffeur.pseudo }}
+					</td>
+					<td>
+						{{ covoiturage.nbPlace }}
+					</td>
+					<td>
+						{{ covoiturage.prixPersonne }}
+						crédits
 					</td>
 					<td>
 						<form method="post" action="{{ path('app_participer_trajet', {'id': covoiturage.id}) }}">

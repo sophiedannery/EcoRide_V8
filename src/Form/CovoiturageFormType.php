@@ -55,6 +55,10 @@ class CovoiturageFormType extends AbstractType
                 'label' => 'Date et heure d\'arrivée',
                 'attr' => ['class' => 'form-control mb-3']
             ])
+            ->add('nb_place', IntegerType::class, [
+                'label' => 'Places disponible',
+                'attr' => ['class' => 'form-control mb-3']
+            ])
             ->add('prix_personne', IntegerType::class, [
                 'label' => 'Prix par personne (dont 2 crédits de frais)',
                 'attr' => ['class' => 'form-control mb-3']
