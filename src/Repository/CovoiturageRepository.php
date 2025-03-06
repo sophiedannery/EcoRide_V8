@@ -16,6 +16,14 @@ class CovoiturageRepository extends ServiceEntityRepository
         parent::__construct($registry, Covoiturage::class);
     }
 
+    public function findAllOrderedByDateDepart(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.date_heure_depart', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Covoiturage[] Returns an array of Covoiturage objects
     //     */

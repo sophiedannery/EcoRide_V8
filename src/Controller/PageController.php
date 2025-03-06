@@ -58,7 +58,7 @@ final class PageController extends AbstractController
     #[Route('/covoiturages', name: 'app_covoiturages')]
     public function covoiturages(CovoiturageRepository $covoiturageRepository): Response
     {
-        $covoiturages = $covoiturageRepository->findAll();
+        $covoiturages = $covoiturageRepository->findAllOrderedByDateDepart();
 
 
         return $this->render('page/covoiturages.html.twig', [
