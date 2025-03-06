@@ -34,6 +34,21 @@
 	<a href="{{ path('app_ajout_voiture') }}" class="btn btn-primary mt-3">Ajouter une voiture</a>
 
 
+	<h3>Mes trajets à venir :</h3>
+	{% if covoiturages is empty %}
+		<p>Vous n'avez pas encore ajouté de trajet.</p>
+	{% else %}
+		<ul class="list-group">
+			{% for covoiturage in covoiturages %}
+				<li class="list-group-item">
+					<strong>{{ covoiturage.depart }}
+						-
+						{{ covoiturage.arrivee }}</strong>
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
 	<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
 
 

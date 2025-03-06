@@ -28,7 +28,7 @@ final class PageController extends AbstractController
     }
 
     #[Route('/mon_espace', name: 'app_mon_espace')]
-    public function mon_espace(VoitureRepository $voitureRepository): Response
+    public function mon_espace(VoitureRepository $voitureRepository, CovoiturageRepository $covoiturageRepository): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -36,11 +36,13 @@ final class PageController extends AbstractController
         }
 
         $voitures = $voitureRepository->findBy(['user' => $user]);
+        $covoiturages = $covoiturageRepository->findBy(['chauffeur' => $user]);
 
 
         return $this->render('page/mon_espace.html.twig', [
             'user' => $user,
-            'voitures' => $voitures
+            'voitures' => $voitures,
+            'covoiturages' => $covoiturages
         ]);
     }
 
