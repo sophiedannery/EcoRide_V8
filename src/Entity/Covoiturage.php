@@ -41,15 +41,19 @@ class Covoiturage
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'covoiturages')]
-    private Collection $chauffeur;
+    private Collection $passagers;
 
     #[ORM\ManyToOne(inversedBy: 'covoiturages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Voiture $voiture = null;
 
+    #[ORM\ManyToOne(inversedBy: 'covoituragesAsChauffeur')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $chauffeur = null;
+
     public function __construct()
     {
-        $this->chauffeur = new ArrayCollection();
+        $this->passagers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,23 +148,23 @@ class Covoiturage
     /**
      * @return Collection<int, User>
      */
-    public function getChauffeur(): Collection
+    public function getPassagers(): Collection
     {
-        return $this->chauffeur;
+        return $this->passagers;
     }
 
-    public function addChauffeur(User $chauffeur): static
+    public function addPassagers(User $passagers): static
     {
-        if (!$this->chauffeur->contains($chauffeur)) {
-            $this->chauffeur->add($chauffeur);
+        if (!$this->passagers->contains($passagers)) {
+            $this->passagers->add($passagers);
         }
 
         return $this;
     }
 
-    public function removeChauffeur(User $chauffeur): static
+    public function removePassagers(User $passagers): static
     {
-        $this->chauffeur->removeElement($chauffeur);
+        $this->passagers->removeElement($passagers);
 
         return $this;
     }
@@ -173,6 +177,18 @@ class Covoiturage
     public function setVoiture(?Voiture $voiture): static
     {
         $this->voiture = $voiture;
+
+        return $this;
+    }
+
+    public function getChauffeur(): ?User
+    {
+        return $this->chauffeur;
+    }
+
+    public function setChauffeur(?User $chauffeur): static
+    {
+        $this->chauffeur = $chauffeur;
 
         return $this;
     }

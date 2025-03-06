@@ -94,7 +94,8 @@ final class PageController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $covoiturage->addChauffeur($user);
+            $chauffeur = $this->getUser();
+            $covoiturage->setChauffeur($chauffeur);
 
             $entityManager->persist($covoiturage);
             $entityManager->flush();

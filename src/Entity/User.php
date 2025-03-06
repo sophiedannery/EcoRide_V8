@@ -53,13 +53,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Covoiturage>
      */
-    #[ORM\ManyToMany(targetEntity: Covoiturage::class, mappedBy: 'chauffeur')]
+    #[ORM\ManyToMany(targetEntity: Covoiturage::class, mappedBy: 'passagers')]
     private Collection $covoiturages;
+
+    /**
+     * @var Collection<int, Covoiturage>
+     */
+    #[ORM\OneToMany(targetEntity: Covoiturage::class, mappedBy: 'chauffeur')]
+    private Collection $covoituragesAsChauffeur;
 
     public function __construct()
     {
         $this->voitures = new ArrayCollection();
         $this->covoiturages = new ArrayCollection();
+        $this->covoituragesAsChauffeur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,7 +222,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->covoiturages->contains($covoiturage)) {
             $this->covoiturages->add($covoiturage);
-            $covoiturage->addChauffeur($this);
+            $covoiturage->addPassagers($this);
         }
 
         return $this;
@@ -224,7 +231,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCovoiturage(Covoiturage $covoiturage): static
     {
         if ($this->covoiturages->removeElement($covoiturage)) {
-            $covoiturage->removeChauffeur($this);
+            $covoiturage->removePassagers($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Covoiturage>
+     */
+    public function getCovoituragesAsChauffeur(): Collection
+    {
+        return $this->covoituragesAsChauffeur;
+    }
+
+    public function addCovoituragesAsChauffeur(Covoiturage $covoituragesAsChauffeur): static
+    {
+        if (!$this->covoituragesAsChauffeur->contains($covoituragesAsChauffeur)) {
+            $this->covoituragesAsChauffeur->add($covoituragesAsChauffeur);
+            $covoituragesAsChauffeur->setChauffeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovoituragesAsChauffeur(Covoiturage $covoituragesAsChauffeur): static
+    {
+        if ($this->covoituragesAsChauffeur->removeElement($covoituragesAsChauffeur)) {
+            // set the owning side to null (unless already changed)
+            if ($covoituragesAsChauffeur->getChauffeur() === $this) {
+                $covoituragesAsChauffeur->setChauffeur(null);
+            }
         }
 
         return $this;

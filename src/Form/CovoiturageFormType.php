@@ -3,12 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Covoiturage;
+use App\Entity\User;
 use App\Entity\Voiture;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,6 +29,14 @@ class CovoiturageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $user = $this->security->getUser();
+
+        // Vérifie que l'utilisateur est bien connecté et est une instance de User
+        if ($user instanceof User) {
+            $userId = $user->getId(); // Utiliser l'ID de l'utilisateur
+        } else {
+            // Gestion d'erreur : l'utilisateur n'est pas connecté ou n'est pas une instance de User
+            $userId = null; // Ou une autre logique de gestion d'erreur
+        }
 
         $builder
             ->add('depart', TextType::class, [
@@ -62,6 +72,10 @@ class CovoiturageFormType extends AbstractType
                 },
                 'label' => 'Voiture utilisée',
                 'attr' => ['class' => 'form-control mb-3']
+            ])
+            ->add('chauffeur', HiddenType::class, [
+                'data' => $userId, // Assigner l'ID de l'utilisateur connecté
+                'mapped' => false, // Ne pas lier ce champ à une propriété dans l'entité Covoiturage
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer le trajet',
