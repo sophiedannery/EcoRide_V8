@@ -89,11 +89,12 @@ final class PageController extends AbstractController
                 $queryBuilder->andWhere('c.prix_personne <= :prixMax')
                     ->setParameter('prixMax', $data['prixMax']);
             }
+
+            if ($data['isEcologique']) {
+                $queryBuilder->andWhere('c.is_ecologique = :isEcologique')
+                    ->setParameter('isEcologique', true);
+            }
         }
-
-
-
-
 
         $covoiturages = $queryBuilder->getQuery()->getResult();
 

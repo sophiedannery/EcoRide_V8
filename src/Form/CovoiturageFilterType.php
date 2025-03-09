@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,12 @@ class CovoiturageFilterType extends AbstractType
                 'label' => 'Prix maximum',
                 'required' => false,
                 'attr' => ['placeholder' => 'Prix maximum']
+            ])
+            ->add('isEcologique', CheckboxType::class, [
+                'label' => 'Voyage écologique',
+                'required' => false,
+                'attr'  => ['class' => 'form-check-input'],
+                'label_attr' => ['class' => 'form-check-label']
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filtrer',
