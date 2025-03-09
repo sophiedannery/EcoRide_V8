@@ -31,10 +31,13 @@ class RegistrationController extends AbstractController
 
             $user->setType($form->get('type')->getData());
 
+            $user->setCredit(20);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
+            $this->addFlash('success', 'Félicitations pour la création de vottre compte ! Voici 20 crédits pour vous remercier de votre confiance.');
 
             return $this->redirectToRoute('app_home');
         }

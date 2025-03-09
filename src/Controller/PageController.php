@@ -7,6 +7,7 @@ use App\Entity\Voiture;
 use App\Form\CovoiturageFormType;
 use App\Form\VoitureFormType;
 use App\Repository\CovoiturageRepository;
+use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,10 +22,14 @@ final class PageController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $user = $this->getUser();
+
+
         $WebsiteName = 'EcoRide';
 
         return $this->render('page/index.html.twig', [
             'website_name' => $WebsiteName,
+
         ]);
     }
 
@@ -156,7 +161,7 @@ final class PageController extends AbstractController
         }
 
         if ($covoiturage->getPassagers()->contains($user)) {
-            $this->addFlash('warning', 'Vous êtes déjà inscrit à ce trajet.');
+            $this->addFlash('error', 'Vous êtes déjà inscrit à ce trajet.');
             return $this->redirectToRoute('app_covoiturages');
         }
 
