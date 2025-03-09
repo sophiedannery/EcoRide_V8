@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Covoiturage;
 use App\Entity\Voiture;
+use App\Form\CovoiturageFilterType;
 use App\Form\CovoiturageFormType;
 use App\Form\VoitureFormType;
 use App\Repository\CovoiturageRepository;
@@ -60,14 +61,46 @@ final class PageController extends AbstractController
         ]);
     }
 
+
+    // #[Route('/covoiturages', name: 'app_covoiturages')]
+    // public function covoiturages(CovoiturageRepository $covoiturageRepository): Response
+    // {
+    //     $covoiturages = $covoiturageRepository->findAllOrderedByDateDepart();
+
+
+    //     return $this->render('page/covoiturages.html.twig', [
+    //         'covoiturages' => $covoiturages
+    //     ]);
+    // }
+
     #[Route('/covoiturages', name: 'app_covoiturages')]
-    public function covoiturages(CovoiturageRepository $covoiturageRepository): Response
+    public function covoiturages(Request $request, CovoiturageRepository $covoiturageRepository): Response
     {
-        $covoiturages = $covoiturageRepository->findAllOrderedByDateDepart();
+        $filterForm = $this->createForm(CovoiturageFilterType::class);
+        $filterForm->handleRequest($request);
+
+        $queryBuilder = $covoiturageRepository->createQueryBuilder('c');
+
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            $data = $filterForm->getData();
+
+
+            if ($data['prixMax']) {
+                $queryBuilder->andWhere('c.prix_personne <= :prixMax')
+                    ->setParameter('prixMax', $data['prixMax']);
+            }
+        }
+
+
+
+
+
+        $covoiturages = $queryBuilder->getQuery()->getResult();
 
 
         return $this->render('page/covoiturages.html.twig', [
-            'covoiturages' => $covoiturages
+            'covoiturages' => $covoiturages,
+            'filterForm' => $filterForm->createView(),
         ]);
     }
 
