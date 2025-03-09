@@ -65,8 +65,12 @@ class CovoiturageFormType extends AbstractType
                 ]
             ])
             ->add('prix_personne', IntegerType::class, [
-                'label' => 'Prix par personne (dont 2 crédits de frais)',
-                'attr' => ['class' => 'form-control mb-3']
+                'label' => 'Prix par personne (frais de gestion : +2 crédits par passager)',
+                'attr' => [
+                    'class' => 'form-control mb-3',
+                    'min' => 1,
+                    'value' => 1,
+                ]
             ])
             // ->add('is_ecologique', CheckboxType::class, [
             //     'label' => 'Trajet écologique',
@@ -87,9 +91,17 @@ class CovoiturageFormType extends AbstractType
                 'mapped' => false, // Ne pas lier ce champ à une propriété dans l'entité Covoiturage
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Créer le trajet',
-                'attr' => ['class' => 'btn btn-primary form-control mb-3 w-100']
+                'label' => 'Ajouter le trajet',
+                'attr' => [
+                    'class' => 'btn btn-primary form-control mb-3 w-100',
+                    'data-bs-toggle' => 'modal',
+                    'data-bs-target' => '#confirmationModal',
+                ]
             ]);
+        // ->add('submit', SubmitType::class, [
+        //     'label' => 'Créer le trajet',
+        //     'attr' => ['class' => 'btn btn-primary form-control mb-3 w-100']
+        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
