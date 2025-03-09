@@ -44,13 +44,18 @@
 									Arrivée :
 									{{ covoiturage.dateHeureArrivee|date('d/m/Y H:i') }}</p>
 								<p class="card-text">
+									<i class="bi bi-clock-fill"></i>
+									Durée :
+									{{ covoiturage.durationFormatted }}
+								</p>
+								<p class="card-text">
 									<i class="bi bi-piggy-bank-fill"></i>
 									Prix :
 									{{ covoiturage.prixPersonne }}
 									crédits</p>
 								<p class="card-text">
 									<i class="bi bi-suitcase-fill"></i>
-									Placse disponibles :
+									Place disponibles :
 									{{ covoiturage.nbPlace }}
 								</p>
 								{% if covoiturage.isEcologique %}

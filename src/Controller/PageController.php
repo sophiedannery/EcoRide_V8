@@ -99,6 +99,14 @@ final class PageController extends AbstractController
         $covoiturages = $queryBuilder->getQuery()->getResult();
 
 
+        foreach ($covoiturages as $covoiturage) {
+            if ($covoiturage->getDateHeureDepart() && $covoiturage->getDateHeureArrivee()) {
+                $duration = $covoiturage->getDateHeureDepart()->diff($covoiturage->getDateHeureArrivee());
+                $covoiturage->durationFormatted = $duration->format('%h heure(s) %i minute(s)');
+            }
+        }
+
+
         return $this->render('page/covoiturages.html.twig', [
             'covoiturages' => $covoiturages,
             'filterForm' => $filterForm->createView(),
