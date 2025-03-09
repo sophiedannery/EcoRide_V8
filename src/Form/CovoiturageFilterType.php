@@ -17,7 +17,10 @@ class CovoiturageFilterType extends AbstractType
             ->add('prixMax', NumberType::class, [
                 'label' => 'Prix maximum',
                 'required' => false,
-                'attr' => ['placeholder' => 'Prix maximum']
+                'attr' => [
+                    'placeholder' => 'Prix maximum',
+                    'class' => 'form-control mb-3'
+                ]
             ])
             ->add('isEcologique', CheckboxType::class, [
                 'label' => 'Voyage écologique',
@@ -27,7 +30,7 @@ class CovoiturageFilterType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Filtrer',
-                'attr' => ['class' => 'btn btn-primary']
+                'attr' => ['class' => 'btn btn-primary mt-3']
             ]);
     }
 

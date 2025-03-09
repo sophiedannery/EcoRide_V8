@@ -44,11 +44,6 @@
 									Arrivée :
 									{{ covoiturage.dateHeureArrivee|date('d/m/Y H:i') }}</p>
 								<p class="card-text">
-									<i class="bi bi-clock-fill"></i>
-									Durée :
-									{{ covoiturage.durationFormatted }}
-								</p>
-								<p class="card-text">
 									<i class="bi bi-piggy-bank-fill"></i>
 									Prix :
 									{{ covoiturage.prixPersonne }}
@@ -66,13 +61,13 @@
 								<div class="mt-auto">
 									<a href="{{ path('app_covoiturages_show', {'id': covoiturage.id}) }}" class="btn btn-primary ">Détails</a>
 								</div>
-								{% if covoiturage.nbPlace <= 0 %}
-									<button type="submit" class="btn btn-secondary mt-3" disabled>Plus de places disponibles</button>
-								{% else %}
-									<form method="post" action="{{ path('app_participer_trajet', {'id': covoiturage.id}) }}">
-										<button type="submit" class="btn btn-primary mt-3">Participer à ce trajet</button>
-									</form>
-								{% endif %}
+								{# {% if covoiturage.nbPlace <= 0 %}
+																	<button type="submit" class="btn btn-secondary mt-3" disabled>Plus de places disponibles</button>
+																{% else %}
+																	<form method="post" action="{{ path('app_participer_trajet', {'id': covoiturage.id}) }}">
+																		<button type="submit" class="btn btn-primary mt-3">Participer à ce trajet</button>
+																	</form>
+																{% endif %} #}
 							</div>
 						</div>
 					</div>

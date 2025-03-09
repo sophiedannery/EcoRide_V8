@@ -76,10 +76,15 @@ final class PageController extends AbstractController
     #[Route('/covoiturages', name: 'app_covoiturages')]
     public function covoiturages(Request $request, CovoiturageRepository $covoiturageRepository): Response
     {
+
+
+
         $filterForm = $this->createForm(CovoiturageFilterType::class);
         $filterForm->handleRequest($request);
 
         $queryBuilder = $covoiturageRepository->createQueryBuilder('c');
+
+
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             $data = $filterForm->getData();
@@ -99,12 +104,9 @@ final class PageController extends AbstractController
         $covoiturages = $queryBuilder->getQuery()->getResult();
 
 
-        foreach ($covoiturages as $covoiturage) {
-            if ($covoiturage->getDateHeureDepart() && $covoiturage->getDateHeureArrivee()) {
-                $duration = $covoiturage->getDateHeureDepart()->diff($covoiturage->getDateHeureArrivee());
-                $covoiturage->durationFormatted = $duration->format('%h heure(s) %i minute(s)');
-            }
-        }
+
+
+
 
 
         return $this->render('page/covoiturages.html.twig', [
