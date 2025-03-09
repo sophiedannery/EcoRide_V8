@@ -24,10 +24,11 @@
 			</li>
 		</ul>
 
-		<div class="col-md-3 text-end">
+		<div class="col-md-4 text-end">
 			{% if app.user %}
-				<a href="#" class="btn btn-outline-primary me-2">...
-										crédits</a>
+				<a href="#" class="btn btn-outline-primary me-2">
+					{{ app.user.credit }}
+					crédits</a>
 				<a href="{{ path('app_mon_espace') }}" class="btn btn-outline-primary me-2">Mon Espace</a>
 				<a href="{{ path('app_logout') }}" class="btn btn-primary">Logout</a>
 			{% else %}

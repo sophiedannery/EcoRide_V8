@@ -13,8 +13,12 @@
 		<strong>Email :</strong>
 		{{ user.email }}</p>
 	<p>
-		<strong>statut :</strong>
+		<strong>Statut :</strong>
 		{{ user.type }}</p>
+
+	<p>
+		<strong>Crédits :</strong>
+		{{ user.credit }}</p>
 
 	<h3>Mes voitures :</h3>
 	{% if voitures is empty %}
@@ -26,7 +30,7 @@
 					<strong>{{ voiture.marque }}
 						{{ voiture.modele }}</strong>
 					| 
-																																			({{ voiture.plaqueImmatriculation }}) |
+																																													({{ voiture.plaqueImmatriculation }}) |
 					<strong>Energie :</strong>
 					{{ voiture.energie }}
 					{% if voiture.energie == 'electrique' %}
