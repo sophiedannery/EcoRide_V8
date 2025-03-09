@@ -91,17 +91,9 @@ class CovoiturageFormType extends AbstractType
                 'mapped' => false, // Ne pas lier ce champ à une propriété dans l'entité Covoiturage
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter le trajet',
-                'attr' => [
-                    'class' => 'btn btn-primary form-control mb-3 w-100',
-                    'data-bs-toggle' => 'modal',
-                    'data-bs-target' => '#confirmationModal',
-                ]
+                'label' => 'Créer le trajet',
+                'attr' => ['class' => 'btn btn-primary form-control mb-3 w-100']
             ]);
-        // ->add('submit', SubmitType::class, [
-        //     'label' => 'Créer le trajet',
-        //     'attr' => ['class' => 'btn btn-primary form-control mb-3 w-100']
-        // ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
