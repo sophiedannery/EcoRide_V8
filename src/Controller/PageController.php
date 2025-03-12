@@ -34,6 +34,13 @@ final class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/contact', name: 'app_contact')]
+    public function contact(): Response
+    {
+
+        return $this->render('page/contact.html.twig');
+    }
+
     #[Route('/mon_espace', name: 'app_mon_espace')]
     public function mon_espace(VoitureRepository $voitureRepository, CovoiturageRepository $covoiturageRepository): Response
     {

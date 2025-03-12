@@ -14,14 +14,18 @@
 				<a href="{{ path('app_covoiturages') }}" class="nav-link px-2">Covoiturages</a>
 			</li>
 			<li>
-				<a href="#" class="nav-link px-2">Pricing</a>
+				<a href="{{ path('app_contact') }}" class="nav-link px-2">Contact</a>
 			</li>
-			<li>
-				<a href="#" class="nav-link px-2">FAQs</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link px-2">About</a>
-			</li>
+			{% if is_granted('ROLE_ADMIN') %}
+				<li>
+					<a href="{{ path('admin') }}" class="nav-link px-2">Admin</a>
+				</li>
+			{% endif %}
+			{% if is_granted('ROLE_EMPLOYE') %}
+				<li>
+					<a href="{{ path('admin_employe') }}" class="nav-link px-2">Espace Employé</a>
+				</li>
+			{% endif %}
 		</ul>
 
 		<div class="col-md-4 text-end">
