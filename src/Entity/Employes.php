@@ -31,6 +31,12 @@ class Employes implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+
+    public function __construct()
+    {
+        $this->roles = ['ROLE_EMPLOYE'];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
