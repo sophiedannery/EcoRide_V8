@@ -323,4 +323,36 @@ final class PageController extends AbstractController
 
         return $this->redirectToRoute('app_mon_espace');
     }
+
+    #[Route('/valider_trajet/{id}', name: 'app_valider_trajet')]
+    public function validerTrajet(int $id, CovoiturageRepository $covoiturageRepository, EntityManagerInterface $entityManager): Response
+    {
+        $covoiturage = $covoiturageRepository->find($id);
+
+        if (!$covoiturage) {
+            throw $this->createNotFoundException('Covoiturage non trouvé');
+        }
+
+        $covoiturage->setStatut('4');
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_mon_espace');
+    }
+
+    #[Route('/signaler_trajet/{id}', name: 'app_signaler_trajet')]
+    public function signalerTrajet(int $id, CovoiturageRepository $covoiturageRepository, EntityManagerInterface $entityManager): Response
+    {
+        $covoiturage = $covoiturageRepository->find($id);
+
+        if (!$covoiturage) {
+            throw $this->createNotFoundException('Covoiturage non trouvé');
+        }
+
+        $covoiturage->setStatut('5');
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_mon_espace');
+    }
 }
