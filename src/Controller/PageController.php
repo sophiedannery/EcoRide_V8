@@ -11,6 +11,7 @@ use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\AST\Join;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -50,21 +51,70 @@ final class PageController extends AbstractController
         }
 
         $voitures = $voitureRepository->findBy(['user' => $user]);
-        $covoiturages = $covoiturageRepository->findBy(['chauffeur' => $user]);
+
+        // $covoiturages = $covoiturageRepository->findBy(['chauffeur' => $user]);
+        $covoiturages = $covoiturageRepository->createQueryBuilder('c')
+            ->where('c.chauffeur = :user')
+            ->andWhere('c.date_heure_depart >= :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime('now'))
+            ->getQuery()
+            ->getResult();
 
         $covoituragesPassager = $covoiturageRepository->createQueryBuilder('c')
             ->join('c.passagers', 'p')
             ->where('p = :user')
+            ->andWhere('c.date_heure_depart >= :now')
             ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime('now'))
             ->getQuery()
             ->getResult();
 
+        // return $this->render('page/mon_espace.html.twig', [
+        //     'user' => $user,
+        //     'voitures' => $voitures,
+        //     'covoiturages' => $covoiturages,
+        //     'covoituragesPassager' => $covoituragesPassager
+        // ]);
 
         return $this->render('page/mon_espace.html.twig', [
             'user' => $user,
             'voitures' => $voitures,
             'covoiturages' => $covoiturages,
-            'covoituragesPassager' => $covoituragesPassager
+            'covoituragesPassager' => $covoituragesPassager,
+        ]);
+    }
+
+    #[Route('/historique', name: 'app_historique')]
+    public function historique(CovoiturageRepository $covoiturageRepository): Response
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+
+        $historiqueTrajetsChauffeur = $covoiturageRepository->createQueryBuilder('c')
+            ->where('c.chauffeur = :user')
+            ->andWhere('c.date_heure_depart < :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime('now'))
+            ->getQuery()
+            ->getResult();
+
+        $historiqueTrajetsPassager = $covoiturageRepository->createQueryBuilder('c')
+            ->join('c.passagers', 'p')
+            ->where('p = :user')
+            ->andWhere('c.date_heure_depart < :now')
+            ->setParameter('user', $user)
+            ->setParameter('now', new \DateTime('now'))
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('page/historique.html.twig', [
+            'user' => $user,
+            'historiqueTrajetsChauffeur' => $historiqueTrajetsChauffeur,
+            'historiqueTrajetsPassagers' => $historiqueTrajetsPassager
         ]);
     }
 

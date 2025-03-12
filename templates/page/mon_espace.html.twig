@@ -30,7 +30,7 @@
 					<strong>{{ voiture.marque }}
 						{{ voiture.modele }}</strong>
 					| 
-																																													({{ voiture.plaqueImmatriculation }}) |
+																																																																						({{ voiture.plaqueImmatriculation }}) |
 					<strong>Energie :</strong>
 					{{ voiture.energie }}
 					{% if voiture.energie == 'electrique' %}
@@ -46,7 +46,7 @@
 	<a href="{{ path('app_ajout_voiture') }}" class="btn btn-primary mt-3">Ajouter une voiture</a>
 
 
-	<h3 class="mt-5">Mes trajets à venir :</h3>
+	<h3 class="mt-5">Mes trajets à venir (chauffeur)</h3>
 	{% if covoiturages is empty %}
 		<p>Vous n'avez pas encore ajouté de trajet.</p>
 	{% else %}
@@ -75,9 +75,10 @@
 		{% endif %}
 
 		<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
+		<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
 
 
-		<h3 class="mt-5">Mes trajets en tant que passager :</h3>
+		<h3 class="mt-5">Mes trajets à venir (passager)</h3>
 		{% if covoituragesPassager is empty %}
 			<p>Vous ne participez à aucun trajet pour le moment.</p>
 		{% else %}
@@ -98,6 +99,7 @@
 		{% endif %}
 
 		<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
+		<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
 
 
 	{% endblock %}

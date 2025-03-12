@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique
+{% endblock %}
+
+{% block body %}
+	<h3 class="mt-5">Mes trajets passés (chauffeur)</h3>
+	{% if historiqueTrajetsChauffeur is empty %}
+		<p>Vous n'avez pas de trajet dans votre historique.</p>
+	{% else %}
+		<ul class="list-group">
+			{% for trajet in historiqueTrajetsChauffeur %}
+				<li class="list-group-item">
+					<strong>{{ trajet.depart }}</strong>
+					-
+					<strong>{{ trajet.arrivee }}</strong>
+					|
+					{{ trajet.dateHeureDepart|date('d/m/Y H:i') }}
+					<div>
+						<strong>Passagers :</strong>
+						{% if trajet.passagers is empty %}
+							Aucun passager pour ce trajet
+						{% else %}
+							<ul>
+								{% for passager in trajet.passagers %}
+									<li>{{ passager.pseudo }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+
+		<h3 class="mt-5">Mes trajets passés (passager)</h3>
+		{% if historiqueTrajetsPassagers is empty %}
+			<p>Vous n'avez pas de trajet dans votre historique.</p>
+		{% else %}
+			<ul class="list-group">
+				{% for trajet in historiqueTrajetsPassagers %}
+					<li class="list-group-item">
+						<strong>{{ trajet.depart }}</strong>
+						-
+						<strong>{{ trajet.arrivee }}</strong>
+						|
+						{{ trajet.dateHeureDepart|date('d/m/Y H:i') }}
+					</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	{% endblock %}
