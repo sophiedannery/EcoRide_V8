@@ -10,30 +10,18 @@ security:
                 class: App\Entity\User
                 property: email
 
-        app_admin_provider:
-            entity:
-                class: App\Entity\Admin
-                property: email
-
-        app_employes_provider:
-            entity:
-                class: App\Entity\Employes
-                property: email
-
-        all_users:
-            chain: 
-                providers: ['app_user_provider', 'app_admin_provider', 'app_employes_provider']
+        
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: all_users
+            provider: app_user_provider
             form_login:
                 login_path: app_login
                 check_path: app_login
-                enable_csrf: false
+                enable_csrf: true
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -50,6 +38,7 @@ security:
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/app_mon_espace, roles: ROLE_USER }
+         - { path: ^/employe, roles: ROLE_EMPLOYE }
 
 when@test:
     security:
