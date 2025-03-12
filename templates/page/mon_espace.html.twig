@@ -30,7 +30,7 @@
 					<strong>{{ voiture.marque }}
 						{{ voiture.modele }}</strong>
 					| 
-																																																																																																				({{ voiture.plaqueImmatriculation }}) |
+																																																																																																																																																																																																							({{ voiture.plaqueImmatriculation }}) |
 					<strong>Energie :</strong>
 					{{ voiture.energie }}
 					{% if voiture.energie == 'electrique' %}
@@ -69,58 +69,83 @@
 								{% endfor %}
 							</ul>
 						{% endif %}
+
 						|
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Démarrer le trajet</button>
+						{% if covoiturage.statut == '1' %}
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ covoiturage.id }}">Démarrer</button>
+						{% endif %}
+
+						{% if covoiturage.statut == '2' %}
+							<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal2{{ covoiturage.id }}">Arrivée à destination</button>
+						{% endif %}
+
+						{% if covoiturage.statut == '3' %}
+							<button type="button" class="btn btn-primary" disabled>Trajet terminé</button>
+						{% endif %}
+
 					</li>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal{{ covoiturage.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">C'est parti !</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									Voulez-vous démarrer ce trajet ?
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+									<a href="{{ path('app_demarrer_trajet', {'id': covoiturage.id}) }}" class="btn btn-primary mt-3">Démarrer</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Modal 2 -->
+					<div class="modal fade" id="exampleModal2{{ covoiturage.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">Bien arrivés ?</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									Voulez-vous marquer ce trajet comme terminé ?
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Pas encore</button>
+									<a href="{{ path('app_arreter_trajet', {'id': covoiturage.id}) }}" class="btn btn-primary mt-3">Arrivée à destination</a>
+								</div>
+							</div>
+						</div>
+					</div>
 				{% endfor %}
-			</ul>
-		{% endif %}
-
-		<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
-		<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
-
-
-		<h3 class="mt-5">Mes trajets à venir (passager)</h3>
-		{% if covoituragesPassager is empty %}
-			<p>Vous ne participez à aucun trajet pour le moment.</p>
-		{% else %}
-			<ul class="list-group">
-				{% for covoituragePassager in covoituragesPassager %}
-					<li class="list-group-item">
-						<strong>{{ covoituragePassager.depart }}</strong>
-						-
-						<strong>{{ covoituragePassager.arrivee }}</strong>
-						|
-						{{ covoituragePassager.dateHeureDepart|date('d/m/Y H:i') }}
-						|
-						{{ covoituragePassager.prixPersonne }}
-						crédits
-					</li>
-				{% endfor %}
-			</ul>
-		{% endif %}
-
-		<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
-		<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
-
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">C'est parti !</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						Voulez-vous démarrer ce trajet ?
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-						<button type="button" class="btn btn-primary">Démarrer</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-	{% endblock %}
+			</li>
+		</ul>
+	{% endif %}
+	<a href="{{ path('app_ajout_trajet') }}" class="btn btn-primary mt-3">Ajouter un trajet</a>
+	<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
+	<h3 class="mt-5">Mes trajets à venir (passager)</h3>
+	{% if covoituragesPassager is empty %}
+		<p>Vous ne participez à aucun trajet pour le moment.</p>
+	{% else %}
+		<ul class="list-group">
+			{% for covoituragePassager in covoituragesPassager %}
+				<li class="list-group-item">
+					<strong>{{ covoituragePassager.depart }}</strong>
+					-
+					<strong>{{ covoituragePassager.arrivee }}</strong>
+					|
+					{{ covoituragePassager.dateHeureDepart|date('d/m/Y H:i') }}
+					|
+					{{ covoituragePassager.prixPersonne }}
+					crédits
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
+	<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
+{% endblock %}

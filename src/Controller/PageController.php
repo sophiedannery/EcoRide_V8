@@ -10,6 +10,7 @@ use App\Form\VoitureFormType;
 use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\AST\Join;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -281,5 +282,45 @@ final class PageController extends AbstractController
         $this->addFlash('success', 'Vous avez rejoint ce trajet en tant que passager.');
 
         return $this->redirectToRoute('app_covoiturages');
+    }
+
+    #[Route('/demarrer_trajet/{id}', name: 'app_demarrer_trajet')]
+    public function demarrerTrajet(int $id, CovoiturageRepository $covoiturageRepository, EntityManagerInterface $entityManager): Response
+    {
+        $covoiturage = $covoiturageRepository->find($id);
+
+        if (!$covoiturage) {
+            throw $this->createNotFoundException('Covoiturage non trouvé');
+        }
+
+        if ($covoiturage->getChauffeur() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas le chauffeur de ce trajet');
+        }
+
+        $covoiturage->setStatut('2');
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_mon_espace');
+    }
+
+    #[Route('/arreter_trajet/{id}', name: 'app_arreter_trajet')]
+    public function arreterTrajet(int $id, CovoiturageRepository $covoiturageRepository, EntityManagerInterface $entityManager): Response
+    {
+        $covoiturage = $covoiturageRepository->find($id);
+
+        if (!$covoiturage) {
+            throw $this->createNotFoundException('Covoiturage non trouvé');
+        }
+
+        if ($covoiturage->getChauffeur() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas le chauffeur de ce trajet');
+        }
+
+        $covoiturage->setStatut('3');
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_mon_espace');
     }
 }
