@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Admin;
 use App\Entity\Employes;
 use App\Entity\User;
 use App\Entity\Voiture;
@@ -51,5 +52,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
         // yield MenuItem::linkToCrud('Voiture', 'fas fa-car', Voiture::class);
         yield MenuItem::linkToCrud('Employés', 'fas fa-briefcase', Employes::class);
+        // yield MenuItem::linkToCrud('Admin', 'fas fa-briefcase', Admin::class);
+        yield MenuItem::linkToLogout('Déconnexion', 'fas fa-sign-out');
     }
 }
