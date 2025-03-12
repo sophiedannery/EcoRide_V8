@@ -54,9 +54,13 @@ class Covoiturage
     #[ORM\Column]
     private ?int $nb_place = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $statut = null;
+
     public function __construct()
     {
         $this->passagers = new ArrayCollection();
+        $this->statut = '1';
     }
 
     public function getId(): ?int
@@ -204,6 +208,18 @@ class Covoiturage
     public function setNbPlace(int $nb_place): static
     {
         $this->nb_place = $nb_place;
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): static
+    {
+        $this->statut = $statut;
 
         return $this;
     }
