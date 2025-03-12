@@ -6,10 +6,12 @@ use App\Entity\Covoiturage;
 use App\Entity\Voiture;
 use App\Form\CovoiturageFilterType;
 use App\Form\CovoiturageFormType;
+use App\Form\ProfilPictureType;
 use App\Form\VoitureFormType;
 use App\Repository\CovoiturageRepository;
 use App\Repository\UserRepository;
 use App\Repository\VoitureRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -35,7 +37,7 @@ final class PageController extends AbstractController
     }
 
     #[Route('/mon_espace', name: 'app_mon_espace')]
-    public function mon_espace(VoitureRepository $voitureRepository, CovoiturageRepository $covoiturageRepository): Response
+    public function mon_espace(Request $request, VoitureRepository $voitureRepository, CovoiturageRepository $covoiturageRepository, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
         if (!$user) {
@@ -53,6 +55,9 @@ final class PageController extends AbstractController
             ->getResult();
 
 
+
+
+
         return $this->render('page/mon_espace.html.twig', [
             'user' => $user,
             'voitures' => $voitures,
@@ -61,17 +66,6 @@ final class PageController extends AbstractController
         ]);
     }
 
-
-    // #[Route('/covoiturages', name: 'app_covoiturages')]
-    // public function covoiturages(CovoiturageRepository $covoiturageRepository): Response
-    // {
-    //     $covoiturages = $covoiturageRepository->findAllOrderedByDateDepart();
-
-
-    //     return $this->render('page/covoiturages.html.twig', [
-    //         'covoiturages' => $covoiturages
-    //     ]);
-    // }
 
     #[Route('/covoiturages', name: 'app_covoiturages')]
     public function covoiturages(Request $request, CovoiturageRepository $covoiturageRepository): Response
