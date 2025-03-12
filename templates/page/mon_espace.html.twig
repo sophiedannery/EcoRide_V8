@@ -30,7 +30,7 @@
 					<strong>{{ voiture.marque }}
 						{{ voiture.modele }}</strong>
 					| 
-																																																																						({{ voiture.plaqueImmatriculation }}) |
+																																																																																																				({{ voiture.plaqueImmatriculation }}) |
 					<strong>Energie :</strong>
 					{{ voiture.energie }}
 					{% if voiture.energie == 'electrique' %}
@@ -69,6 +69,8 @@
 								{% endfor %}
 							</ul>
 						{% endif %}
+						|
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Démarrer le trajet</button>
 					</li>
 				{% endfor %}
 			</ul>
@@ -100,6 +102,25 @@
 
 		<a href="{{ path('app_covoiturages') }}" class="btn btn-primary mt-3">Chercher un covoiturage</a>
 		<a href="{{ path('app_historique') }}" class="btn btn-secondary mt-3">Historique de mes trajets</a>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">C'est parti !</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						Voulez-vous démarrer ce trajet ?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+						<button type="button" class="btn btn-primary">Démarrer</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 	{% endblock %}
