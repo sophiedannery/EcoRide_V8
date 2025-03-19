@@ -355,4 +355,10 @@ final class PageController extends AbstractController
 
         return $this->redirectToRoute('app_mon_espace');
     }
+
+    #[Route('/app_mentions_legales', name: 'app_mentions_legales')]
+    public function mentions_legales(): Response
+    {
+        return $this->render('page/mentions_legales.html.twig');
+    }
 }
