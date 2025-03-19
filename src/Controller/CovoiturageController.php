@@ -112,7 +112,6 @@ class CovoiturageController extends AbstractController
                 ]);
             }
 
-            // return new Response("Désolé, aucun itinéraire trouvé.");
             return $this->render('covoiturages/covoiturages_V2.html.twig');
         }
 
