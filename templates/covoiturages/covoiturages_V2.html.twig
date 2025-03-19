@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Covoiturages
+{% endblock %}
+
+{% block body %}
+
+
+	<div>
+		<form method="GET" action="{{ path('search_covoiturage') }}">
+			<div class="row">
+				<div class="col-md-3">
+					<input type="text" name="depart" placeholder="Ville de départ" required class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="arrivee" placeholder="Ville d'arrivée" required class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="date" name="date" required class="form-control">
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary">Rechercher</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	{% if covoiturages is defined %}
+
+		<div class="col-md-12">
+			<div class="row text-center g-4">
+				{% for trajet in covoiturages %}
+					<h2>Résultat de votre recherche</h2>
+					<div class="col-md-4 my-2 d-flex">
+						<div class="card w-100">
+							<h5 class="card-title">{{ trajet.depart }}
+								-
+								{{ trajet.arrivee }}</h5>
+							<p class="card-text">
+								<i class="bi bi-person-circle"></i>
+								Chauffeur :
+								{{ trajet.chauffeur.pseudo }}
+								| Note :
+							</p>
+							<p class="card-text">
+								<i class="bi bi-calendar-check"></i>
+								Départ :
+								{{ trajet.dateHeureDepart|date('d/m/Y H:i') }}</p>
+							<p class="card-text">
+								<i class="bi bi-calendar-check"></i>
+								Arrivée :
+								{{ trajet.dateHeureArrivee|date('d/m/Y H:i') }}</p>
+							<p class="card-text">
+								<i class="bi bi-piggy-bank-fill"></i>
+								Prix :
+								{{ trajet.prixPersonne }}
+								crédits</p>
+							<p class="card-text">
+								<i class="bi bi-suitcase-fill"></i>
+								Place disponibles :
+								{{ trajet.nbPlace }}
+							</p>
+							{% if trajet.isEcologique %}
+								<p class="card-text">
+									<i class="bi bi-ev-front-fill"></i>
+									Trajet écologique</p>
+							{% endif %}
+							<div class="mt-auto">
+								<a href="{{ path('app_covoiturages_show', {'id': trajet.id}) }}" class="btn btn-primary ">Détails</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	{% elseif prochainCovoiturage is defined %}
+
+		<div class="col-md-12">
+			<div class="row text-center g-4">
+				<h2>Aucun trajet trouvé à cette date</h2>
+				<h3>Prochain trajet :</h3>
+				<div class="col-md-4 my-2 d-flex">
+					<div class="card w-100">
+						<h5 class="card-title">{{ prochainCovoiturage.depart }}
+							-
+							{{ prochainCovoiturage.arrivee }}</h5>
+						<p class="card-text">
+							<i class="bi bi-person-circle"></i>
+							Chauffeur :
+							{{ prochainCovoiturage.chauffeur.pseudo }}
+							| Note :
+						</p>
+						<p class="card-text">
+							<i class="bi bi-calendar-check"></i>
+							<strong>Départ :
+								{{ prochainCovoiturage.dateHeureDepart|date('d/m/Y H:i') }}</strong>
+						</p>
+						<p class="card-text">
+							<i class="bi bi-calendar-check"></i>
+							Arrivée :
+							{{ prochainCovoiturage.dateHeureArrivee|date('d/m/Y H:i') }}</p>
+						<p class="card-text">
+							<i class="bi bi-piggy-bank-fill"></i>
+							Prix :
+							{{ prochainCovoiturage.prixPersonne }}
+							crédits</p>
+						<p class="card-text">
+							<i class="bi bi-suitcase-fill"></i>
+							Place disponibles :
+							{{ prochainCovoiturage.nbPlace }}
+						</p>
+						{% if prochainCovoiturage.isEcologique %}
+							<p class="card-text">
+								<i class="bi bi-ev-front-fill"></i>
+								Trajet écologique</p>
+						{% endif %}
+						<div class="mt-auto">
+							<a href="{{ path('app_covoiturages_show', {'id': prochainCovoiturage.id}) }}" class="btn btn-primary ">Détails</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	{% else %}
+		<div class="col-md-12">
+			<div class="row text-center g-4">
+				<h2>Aucun trajet trouvé à cette date</h2>
+			</div>
+		</div>
+
+	{% endif %}
+
+
+{% endblock %}

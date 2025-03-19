@@ -19,11 +19,22 @@
 	</div>
 
 	<div>
+		<h2>Rechercher un trajet :</h2>
 		<form method="GET" action="{{ path('search_covoiturage') }}">
-			<input type="text" name="depart" placeholder="Ville de départ" required>
-			<input type="text" name="arrivee" placeholder="Ville d'arrivée" required>
-			<input type="date" name="date" required>
-			<button type="submit">Rechercher</button>
+			<div class="row">
+				<div class="col-md-3">
+					<input type="text" name="depart" placeholder="Ville de départ" required class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="arrivee" placeholder="Ville d'arrivée" required class="form-control">
+				</div>
+				<div class="col-md-3">
+					<input type="date" name="date" required class="form-control">
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary">Rechercher</button>
+				</div>
+			</div>
 		</form>
 	</div>
 {% endblock %}

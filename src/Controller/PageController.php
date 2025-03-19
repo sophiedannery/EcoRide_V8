@@ -281,7 +281,7 @@ final class PageController extends AbstractController
 
         $this->addFlash('success', 'Vous avez rejoint ce trajet en tant que passager.');
 
-        return $this->redirectToRoute('app_covoiturages');
+        return $this->redirectToRoute('app_covoiturages_v2');
     }
 
     #[Route('/demarrer_trajet/{id}', name: 'app_demarrer_trajet')]
