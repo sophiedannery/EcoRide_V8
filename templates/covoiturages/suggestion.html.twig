@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suggestions
+{% endblock %}
+
+{% block body %}
+
+	<h2>Aucun trajet trouvé pour la date demandée</h2>
+	<p>Le prochain trajet disponible est le
+		<strong>{{ covoiturage.dateHeureDepart|date('d/m/Y H:i') }}</strong>.</p>
+	<a href="{{ path('search_covoiturage', { depart: covoiturage.depart, arrivee: covoiturage.arrivee, date: covoiturage.dateHeureDepart|date('Y-m-d') }) }}">
+		Voir ce trajet
+	</a>
+
+
+{% endblock %}

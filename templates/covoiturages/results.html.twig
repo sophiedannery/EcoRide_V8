@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche
+{% endblock %}
+
+{% block body %}
+
+	<h2>Résultat de votre recherche</h2>
+
+	{% if covoiturages is not empty %}
+		{% for trajet in covoiturages %}
+			<div>
+				<p>Départ:
+					{{ trajet.depart }}
+					- Arrivée :{{ trajet.arrivee }}
+				</p>
+				<p>Date :
+					{{ trajet.dateHeureDepart|date('d/m/Y H:i') }}</p>
+				<p>Place disponible :
+					{{ trajet.nbPlace }}</p>
+				<p>Prix :
+					{{ trajet.prixPersonne }}</p>
+				<a href="#">Réserver</a>
+			</div>
+		{% endfor %}
+	{% else %}
+		<p>aucun trajet trouvé.</p>
+
+
+	{% endif %}
+
+
+{% endblock %}
